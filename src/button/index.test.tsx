@@ -1,19 +1,19 @@
-import React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import Button from "./index"
-import { describe, test, it, expect } from "vitest"
+import { describe, test, it, expect, vi } from "vitest"
 
 describe("Button", () => {
-  test("renders Button", () => {
+  test("renders Button text child", () => {
     render(<Button>click me</Button>)
     const linkElement = screen.getByText(/click me/i)
     expect(linkElement).toBeInTheDocument()
   })
 
-  test("renders normal Button", () => {
+  test("renders normal Button default case size type", () => {
     const { container } = render(<Button>click me</Button>)
 
-    expect(container.querySelector(".ant-btn-normal")).toBeInTheDocument()
+    expect(container.querySelector(".ant-btn-default")).toBeInTheDocument()
+    expect(container.querySelector(".ant-btn-middle")).toBeInTheDocument()
   })
 
   test("renders primary Button", () => {
@@ -29,7 +29,7 @@ describe("Button", () => {
   })
 
   test("should support click", () => {
-    const onClick = jest.fn()
+    const onClick = vi.fn()
     render(
       <Button type="primary" onClick={onClick}>
         click me
@@ -43,7 +43,7 @@ describe("Button", () => {
   })
 
   test("should support blur", () => {
-    const onBlur = jest.fn()
+    const onBlur = vi.fn()
     render(
       <Button type="primary" onBlur={onBlur}>
         click me
@@ -55,18 +55,5 @@ describe("Button", () => {
     fireEvent.blur(linkElement)
 
     expect(onBlur).toBeCalled()
-  })
-  test("should support focus", () => {
-    const onFocus = jest.fn()
-    render(
-      <Button type="primary" onFocus={onFocus}>
-        click me
-      </Button>
-    )
-
-    const linkElement = screen.getByText(/click me/i)
-    fireEvent.focus(linkElement)
-
-    expect(onFocus).toBeCalled()
   })
 })

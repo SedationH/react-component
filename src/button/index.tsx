@@ -1,38 +1,43 @@
 import React, { ReactNode } from "react"
 import classNames from "classnames"
+import { getPrefixCls } from "../utils/style-utils"
+import { tuple } from "../_util/type"
 
-interface buttonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  className?: string
-  type?: "normal" | "primary" | "dashed" | "link" | "text"
-  size?: "small" | "medium" | "large"
+const ButtonTypes = tuple("default", "primary", "ghost", "dashed", "link", "text")
+export type ButtonType = typeof ButtonTypes[number]
+const SizeTypes = tuple("small", "middle", "large")
+export type SizeType = typeof SizeTypes[number]
+const ButtonHTMLTypes = tuple("submit", "button", "reset")
+export type ButtonHTMLType = typeof ButtonHTMLTypes[number]
+
+interface NativeButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  size?: SizeType
+  type?: ButtonType
+  htmlType?: ButtonHTMLType
   children?: ReactNode
-  style?: React.CSSProperties
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
-  onBlur?: React.FocusEventHandler<HTMLButtonElement>
-  htmlType?: "button" | "submit" | "reset"
 }
 
-const Button = React.forwardRef<HTMLButtonElement, buttonProps>((props: buttonProps, ref) => {
-  const {
-    className,
-    type = "normal",
-    size = "medium",
-    children,
-    style,
-    onClick,
-    onBlur,
-    htmlType = "button",
-    ...others
-  } = props
+const Button = React.forwardRef<HTMLButtonElement, NativeButtonProps>((props: NativeButtonProps, ref) => {
+  const { className, size = "middle", type = "default", children, style, onClick, htmlType = "button", ...rest } = props
 
-  const cls = classNames({
-    "ant-btn": true,
-    [`ant-btn-${size}`]: size,
-    [`ant-btn-${type}`]: type,
-    [className as string]: !!className,
-  })
+  const prefixCls = getPrefixCls("btn")
+
+  const classes = classNames(
+    prefixCls,
+    {
+      [`${prefixCls}-${size}`]: size,
+      [`${prefixCls}-${type}`]: type,
+    },
+    className
+  )
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO 做一些额外行为
+    onClick?.(e)
+  }
+
   return (
-    <button {...others} type={htmlType} ref={ref} className={cls} style={style} onClick={onClick} onBlur={onBlur}>
+    <button {...rest} type={htmlType} ref={ref} className={classes} style={style} onClick={handleClick}>
       {children}
     </button>
   )
