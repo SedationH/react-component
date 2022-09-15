@@ -1,27 +1,27 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Icon from './index';
+import React from "react"
+import { render, screen, fireEvent } from "@testing-library/react"
+import Icon from "./index"
+import { vi } from "vitest"
 
-describe('Icon', () => {
-  test('renders Icon', () => {
-    const { container } = render(<Icon type="fixed"/>);
-    expect(container.querySelector('svg')).toBeInTheDocument();
-  });
+describe("Icon", () => {
+  test("renders Icon", () => {
+    const { container } = render(<Icon type="fixed" />)
+    expect(container.querySelector("svg")).toBeInTheDocument()
+  })
 
-  test('custom className', () => {
-    const { container } = render(<Icon type="fixed" className="custom"/>);
-  
-    expect(container.querySelector('.custom')).toBeInTheDocument();
-  });
+  test("custom className", () => {
+    const { container } = render(<Icon type="fixed" className="custom" />)
 
-  test('should support click', () => {
-    const onClick = jest.fn();
-    const {container} = render(<Icon type="fixed" onClick={onClick} />);
+    expect(container.querySelector(".custom")).toBeInTheDocument()
+  })
 
-    const linkElement = container.querySelector('svg') as SVGSVGElement;
-    fireEvent.click(linkElement);
+  test("should support click", () => {
+    const onClick = vi.fn()
+    const { container } = render(<Icon type="fixed" onClick={onClick} />)
 
-    expect(onClick).toBeCalled();
-  });
-});
+    const linkElement = container.querySelector("svg") as SVGSVGElement
+    fireEvent.click(linkElement)
 
+    expect(onClick).toBeCalled()
+  })
+})

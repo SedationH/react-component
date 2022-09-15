@@ -17,7 +17,7 @@ interface NativeButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
 }
 
-const Button = React.forwardRef<HTMLButtonElement, NativeButtonProps>((props: NativeButtonProps, ref) => {
+const Button = (props: NativeButtonProps) => {
   const { className, size = "middle", type = "default", children, style, onClick, htmlType = "button", ...rest } = props
 
   const prefixCls = getPrefixCls("btn")
@@ -37,10 +37,10 @@ const Button = React.forwardRef<HTMLButtonElement, NativeButtonProps>((props: Na
   }
 
   return (
-    <button {...rest} type={htmlType} ref={ref} className={classes} style={style} onClick={handleClick}>
+    <button {...rest} type={htmlType} className={classes} style={style} onClick={handleClick}>
       {children}
     </button>
   )
-})
+}
 
 export default Button

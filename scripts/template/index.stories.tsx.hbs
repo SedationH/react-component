@@ -1,0 +1,24 @@
+import { ComponentStory, ComponentMeta } from "@storybook/react"
+import {{componentName}} from "./index"
+
+import "./index.less"
+
+export default {
+  title: "{{componentName}}",
+  component: {{componentName}},
+} as ComponentMeta<typeof {{componentName}}>
+
+export const BasicUse = () => {
+  return (
+    <>
+      <{{componentName}}>{{componentName}}</{{componentName}}>
+    </>
+  )
+}
+
+const Template: ComponentStory<typeof {{componentName}}> = (args) => <{{componentName}} {...args} />
+
+export const Primary = Template.bind({})
+Primary.args = {
+  children: "{{componentName}}"
+}
