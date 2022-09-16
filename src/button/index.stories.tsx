@@ -5,9 +5,18 @@ import Button from "./index"
 import "./index.less"
 
 export default {
-  title: "Button",
+  title: "Example/Button",
   component: Button,
 } as ComponentMeta<typeof Button>
+
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />
+
+export const Primary = Template.bind({})
+Primary.args = {
+  type: "primary",
+  children: "This is Primary",
+  size: "small",
+}
 
 const style = {
   marginLeft: 10,
@@ -28,12 +37,4 @@ export const BasicUse = () => {
       </Button>
     </>
   )
-}
-
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />
-
-export const Primary = Template.bind({})
-Primary.args = {
-  type: "primary",
-  children: "This is Primary",
 }
