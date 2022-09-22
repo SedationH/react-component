@@ -1,24 +1,49 @@
-import React, { useEffect, useState } from "react"
+import React, { FormEventHandler, useEffect, useState } from "react"
 import classNames from "classnames"
 import { getPrefixCls } from "../utils/style-utils"
+import RadioGroupContext from "./context"
+import { RadioChangeEvent, RadioGroupContextProps } from "./interface"
 
 interface RadioProps extends React.HTMLAttributes<HTMLInputElement> {
   checked?: boolean
   disabled?: boolean
   defaultChecked?: boolean
   value?: string
+  onChange?: FormEventHandler<HTMLInputElement>
 }
 
 const Radio = (props: RadioProps) => {
   const { className, style, children, disabled, defaultChecked = false, onChange, ...restProps } = props
 
-  const [checked, setChecked] = useState("checked" in props ? props.checked : defaultChecked)
+  const onChangeWithContext = (e: RadioChangeEvent) => {
+    onChange?.(e)
+    groupContext?.onChange?.(e)
+  }
+
+  const groupContext = React.useContext(RadioGroupContext)
+
+  const radioProps: RadioProps = { ...restProps }
+
+  if (groupContext) {
+    radioProps.onChange = onChangeWithContext
+    radioProps.checked = props.value === groupContext.value
+    radioProps.disabled = radioProps.disabled || groupContext.disabled
+  }
+
+  const [checked, setChecked] = useState(() => {
+    // groupContext 具有更高的优先级
+    if ("checked" in props) {
+      return radioProps.checked
+    } else {
+      return defaultChecked
+    }
+  })
 
   useEffect(() => {
-    setChecked(props.checked)
-  }, [props.checked])
+    setChecked(radioProps.checked)
+  }, [radioProps.checked])
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange: RadioGroupContextProps["onChange"] = (e) => {
     onChange?.(e)
     if ("checked" in props) {
       return
@@ -52,7 +77,7 @@ const Radio = (props: RadioProps) => {
           checked={checked}
           onChange={handleChange}
           type="radio"
-          {...restProps}
+          {...radioProps}
         />
         <span className={`${prefixCls}-inner`} />
       </span>
