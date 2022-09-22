@@ -1,5 +1,5 @@
 {
-  "name": "@vitest/example-testing-lib-react",
+  "name": "@sedationh/react-component",
   "private": true,
   "scripts": {
     "test": "vitest",
