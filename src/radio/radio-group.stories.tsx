@@ -23,6 +23,7 @@ Unit.args = {
     <Radio value="4">4</Radio>,
   ],
   defaultValue: "2",
+  disabled: true,
 }
 
 export const NotUnderControl = () => {

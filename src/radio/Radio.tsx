@@ -60,14 +60,14 @@ const Radio = (props: RadioProps) => {
     `${prefixCls}-wrapper`,
     {
       [`${prefixCls}-wrapper-checked`]: checked,
-      [`${prefixCls}-wrapper-disabled`]: disabled,
+      [`${prefixCls}-wrapper-disabled`]: radioProps.disabled,
     },
     className
   )
 
   const classString = classNames(prefixCls, className, {
     [`${prefixCls}-checked`]: checked,
-    [`${prefixCls}-disabled`]: disabled,
+    [`${prefixCls}-disabled`]: radioProps.disabled,
   })
 
   // label 和 input https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label
@@ -76,7 +76,6 @@ const Radio = (props: RadioProps) => {
       <span className={classString}>
         <input
           className={`${prefixCls}-input`}
-          disabled={disabled}
           checked={checked}
           onChange={handleChange}
           type="radio"
