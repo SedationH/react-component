@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { useState } from "react"
 import Button from "../button"
-import Radio from "./index"
+import Radio from "./Radio"
 
 import "./index.less"
 import "../button/index.less"
@@ -16,7 +16,9 @@ const Template: ComponentStory<typeof Radio> = (args) => <Radio {...args} />
 export const Unit = Template.bind({})
 Unit.args = {
   children: "Radio",
-  disabled: false,
+  disabled: undefined,
+  checked: undefined,
+  defaultChecked: undefined,
 }
 
 export const UnderControl = () => {
@@ -39,6 +41,20 @@ export const NotUnderControl = () => {
   return (
     <>
       <Radio>Radio</Radio>
+    </>
+  )
+}
+
+export const OnChange = () => {
+  return (
+    <>
+      <Radio
+        onChange={(e) => {
+          console.log("sedationh e", e)
+        }}
+      >
+        Radio
+      </Radio>
     </>
   )
 }
