@@ -17,6 +17,9 @@ function RadioGroup(props: RadioGroupProps) {
   const [value, setValue] = useState("value" in props ? props.value : defaultValue)
 
   useEffect(() => {
+    if (props.value === undefined) {
+      return
+    }
     setValue(props.value)
   }, [props.value])
 

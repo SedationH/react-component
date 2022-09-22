@@ -40,6 +40,9 @@ const Radio = (props: RadioProps) => {
   })
 
   useEffect(() => {
+    if (radioProps.checked === undefined) {
+      return
+    }
     setChecked(radioProps.checked)
   }, [radioProps.checked])
 

@@ -16,9 +16,7 @@ const Template: ComponentStory<typeof Radio> = (args) => <Radio {...args} />
 export const Unit = Template.bind({})
 Unit.args = {
   children: "Radio",
-  disabled: undefined,
-  checked: undefined,
-  defaultChecked: undefined,
+  defaultChecked: true,
 }
 
 export const UnderControl = () => {
