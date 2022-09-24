@@ -21,7 +21,15 @@ Unit.args = {
 export const AlwaysTrue = () => {
   return (
     <>
-      <Checkbox checked={true}>Radio</Checkbox>
+      <Checkbox checked>Radio</Checkbox>
+    </>
+  )
+}
+
+export const defaultChecked = () => {
+  return (
+    <>
+      <Checkbox defaultChecked />
     </>
   )
 }

@@ -8,11 +8,14 @@ interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Checkbox = (props: CheckboxProps) => {
-  const { className, children, ...rest } = props
+  const { className, children, defaultChecked = false, ...rest } = props
 
-  const [checked, setChecked] = useState("checked" in props ? props.checked : false)
+  const [checked, setChecked] = useState("checked" in props ? props.checked : defaultChecked)
 
   useEffect(() => {
+    if (!("checked" in props)) {
+      return
+    }
     setChecked(props.checked)
   }, [props.checked])
 
@@ -43,7 +46,7 @@ const Checkbox = (props: CheckboxProps) => {
         <input checked={checked} type="checkbox" className="ant-checkbox-input" onChange={handleChange} />
         <span className="ant-checkbox-inner"></span>
       </span>
-      <span>Checkbox</span>
+      <span>{children}</span>
     </label>
   )
 }
