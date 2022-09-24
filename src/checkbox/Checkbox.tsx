@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import classNames from "classnames"
 import { getPrefixCls } from "../utils/style-utils"
 
@@ -10,12 +10,17 @@ interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
 const Checkbox = (props: CheckboxProps) => {
   const { className, children, ...rest } = props
 
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState("checked" in props ? props.checked : false)
+
+  useEffect(() => {
+    setChecked(props.checked)
+  }, [props.checked])
 
   const handleChange = (e: any) => {
-    const checked = e.target.checked
-    console.log("sedationh", { checked })
-    setChecked(checked)
+    if ("checked" in props) {
+      return
+    }
+    setChecked(!checked)
   }
 
   const prefixCls = getPrefixCls("checkbox")
@@ -35,7 +40,7 @@ const Checkbox = (props: CheckboxProps) => {
   return (
     <label className={wrapperCls}>
       <span className={cls}>
-        <input type="checkbox" className="ant-checkbox-input" onChange={handleChange} />
+        <input checked={checked} type="checkbox" className="ant-checkbox-input" onChange={handleChange} />
         <span className="ant-checkbox-inner"></span>
       </span>
       <span>Checkbox</span>
