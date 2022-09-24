@@ -31,11 +31,7 @@ const lowCase = (str) => str.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`).rep
       componentName,
     })
 
-    const newPath = filePath
-      .replace("scripts/template", `src/${dirName}`)
-      .replace("component", dirName)
-      .replace("Component", componentName)
-      .replace(".hbs", "")
+    const newPath = filePath.replace("scripts/template", `src/${dirName}`).replace(".hbs", "")
 
     await fs.writeFile(newPath, result)
 
@@ -45,7 +41,7 @@ const lowCase = (str) => str.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`).rep
   const response = await fetch(`https://unpkg.com/antd@4.23.1/es/${dirName}/style/index.css`)
   const body = await response.text()
 
-  const scssFile = path.join(process.cwd(), `src/${dirName}/index.less`)
-  await fs.writeFile(scssFile, body)
-  console.log(chalk.green(`update ${scssFile} success`))
+  const lessFile = path.join(process.cwd(), `src/${dirName}/index.less`)
+  await fs.writeFile(lessFile, body)
+  console.log(chalk.green(`update ${lessFile} success`))
 })()
