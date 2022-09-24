@@ -32,7 +32,7 @@ const Radio = (props: RadioProps) => {
 
   const [checked, setChecked] = useState(() => {
     // groupContext 具有更高的优先级
-    if ("checked" in props) {
+    if ("checked" in radioProps) {
       return radioProps.checked
     } else {
       return defaultChecked
@@ -48,7 +48,7 @@ const Radio = (props: RadioProps) => {
 
   const handleChange: RadioGroupContextProps["onChange"] = (e) => {
     onChange?.(e)
-    if ("checked" in props) {
+    if ("checked" in radioProps) {
       return
     }
     setChecked(true)

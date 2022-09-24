@@ -1,26 +1,36 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import classNames from "classnames"
 import { getPrefixCls } from "../utils/style-utils"
+import { CheckboxContext } from "./Group"
 
 interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
   checked?: boolean
   defaultChecked?: boolean
+  value?: string
 }
 
 const Checkbox = (props: CheckboxProps) => {
-  const { className, children, defaultChecked = false, ...rest } = props
+  const { className, children, defaultChecked = false, value, ...rest } = props
 
-  const [checked, setChecked] = useState("checked" in props ? props.checked : defaultChecked)
+  const groupContext = useContext(CheckboxContext)
+
+  const checkedProps = { ...rest }
+
+  if (groupContext) {
+    checkedProps.checked = value ? groupContext.value.includes(value) : props.checked
+  }
+
+  const [checked, setChecked] = useState("checked" in checkedProps ? checkedProps.checked : defaultChecked)
 
   useEffect(() => {
-    if (!("checked" in props)) {
+    if (!("checked" in checkedProps)) {
       return
     }
-    setChecked(props.checked)
-  }, [props.checked])
+    setChecked(checkedProps.checked)
+  }, [checkedProps.checked])
 
   const handleChange = (e: any) => {
-    if ("checked" in props) {
+    if ("checked" in checkedProps) {
       return
     }
     setChecked(!checked)
