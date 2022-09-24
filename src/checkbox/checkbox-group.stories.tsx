@@ -44,6 +44,27 @@ export const Basic = () => {
   )
 }
 
+export const OnChange = () => {
+  const [value, setValue] = useState(["2"])
+  return (
+    <>
+      <Group
+        onChange={(v) => {
+          console.log("sedationh", v)
+          setValue(v)
+        }}
+        value={value}
+      >
+        <Checkbox value="1">1</Checkbox>
+        <Checkbox value="2">2</Checkbox>
+        <Checkbox value="3">3</Checkbox>
+        <Checkbox value="4">4</Checkbox>
+        <Checkbox value="5">5</Checkbox>
+      </Group>
+    </>
+  )
+}
+
 // export const defaultChecked = () => {
 //   return (
 //     <>

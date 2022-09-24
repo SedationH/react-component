@@ -58,16 +58,16 @@ export const UnderControl = () => {
 //   )
 // }
 
-// export const OnChange = () => {
-//   return (
-//     <>
-//       <Radio
-//         onChange={(e) => {
-//           console.log("sedationh e", e)
-//         }}
-//       >
-//         Radio
-//       </Radio>
-//     </>
-//   )
-// }
+export const OnChange = () => {
+  return (
+    <>
+      <Checkbox
+        onChange={(e) => {
+          console.log("sedationh  ni shi zhu", e)
+        }}
+      >
+        Radio
+      </Checkbox>
+    </>
+  )
+}

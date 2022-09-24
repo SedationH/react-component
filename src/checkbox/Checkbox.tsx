@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { FormEventHandler, useContext, useEffect, useState } from "react"
 import classNames from "classnames"
 import { getPrefixCls } from "../utils/style-utils"
 import { CheckboxContext } from "./Group"
@@ -7,10 +7,11 @@ interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
   checked?: boolean
   defaultChecked?: boolean
   value?: string
+  onChange?: FormEventHandler<HTMLInputElement>
 }
 
 const Checkbox = (props: CheckboxProps) => {
-  const { className, children, defaultChecked = false, value, ...rest } = props
+  const { className, children, defaultChecked = false, value, onChange, ...rest } = props
 
   const groupContext = useContext(CheckboxContext)
 
@@ -29,7 +30,19 @@ const Checkbox = (props: CheckboxProps) => {
     setChecked(checkedProps.checked)
   }, [checkedProps.checked])
 
-  const handleChange = (e: any) => {
+  const handleChange: CheckboxProps["onChange"] = (e) => {
+    onChange?.(e)
+    // TODO：解决 类型问题
+    if (value !== undefined) {
+      let newGroupValue = groupContext?.value.slice() || []
+      if (!checked) {
+        // 将要被选中
+        newGroupValue.push(value)
+      } else {
+        newGroupValue = newGroupValue.filter((v) => v !== value)
+      }
+      groupContext?.onChange?.(newGroupValue)
+    }
     if ("checked" in checkedProps) {
       return
     }
