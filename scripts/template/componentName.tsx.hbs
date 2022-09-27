@@ -1,0 +1,27 @@
+import React from "react"
+import classNames from "classnames"
+import { getPrefixCls } from "../utils/style-utils"
+
+interface {{componentName}}Props extends React.HTMLAttributes<HTMLDivElement> {}
+
+const {{componentName}} = (props: {{componentName}}Props) => {
+  const { className, children, ...rest } = props
+
+  const prefixCls = getPrefixCls("{{dirName}}")
+
+  const classes = classNames(
+    prefixCls,
+    {
+      // [`${prefixCls}-${type}`]: type,
+    },
+    className
+  )
+
+  return (
+    <div {...rest} className={classes}>
+      {children}
+    </div>
+  )
+}
+
+export default {{componentName}}
