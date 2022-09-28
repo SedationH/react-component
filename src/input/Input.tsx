@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react"
 import { getPrefixCls } from "../utils/style-utils"
 import classNames from "classnames"
 
-interface InputProps extends React.HTMLAttributes<HTMLElement> {
+interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
   defaultValue?: string
   value?: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
+  maxLength?: number
 }
 
 const Input = (props: InputProps) => {
-  const { className, children, defaultValue = "", ...rest } = props
+  const { className, children, defaultValue = "", onChange, ...rest } = props
 
   const [value, setValue] = useState(props.value !== undefined ? props.value : defaultValue)
 
@@ -21,7 +22,7 @@ const Input = (props: InputProps) => {
   }, [props.value])
 
   const handleInput: InputProps["onChange"] = (e) => {
-    props?.onChange?.(e)
+    onChange?.(e)
     if (props.value !== undefined) {
       return
     }
@@ -39,10 +40,21 @@ const Input = (props: InputProps) => {
     className
   )
 
+  const $input = <input value={value} onInput={handleInput} className={classes} {...rest}></input>
+
+  if (props.maxLength === undefined) {
+    return $input
+  }
+
   return (
-    <>
-      <input value={value} onInput={handleInput} className={classes} type="text"></input>
-    </>
+    <span className="ant-input-affix-wrapper">
+      {$input}
+      <span className={`${prefixCls}-suffix`}>
+        <span className={`${prefixCls}-show-count-suffix`}>
+          {value.length} / {props.maxLength}
+        </span>
+      </span>
+    </span>
   )
 }
 
